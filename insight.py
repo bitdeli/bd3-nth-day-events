@@ -37,13 +37,13 @@ def make_day(day_data):
 def select_days(params):
     def label(n):
         return 'Day %d' % n
-    if 'events' in params:
-        chosen = [int(d.split()[1]) for d in params['events']['value']]
+    if 'tables' in params:
+        chosen = [int(d.split()[1]) for d in params['tables']['value']]
     else:
         chosen = range(DEFAULT_SHOW_DAYS)
     data = [label(i) for i in range(NUM_DAYS) if i not in chosen]
     return chosen, TokenInput(id='tables',
-                              size=(12, 1),
+                              size=(10, 1),
                               label='Show Days',
                               value=map(label, chosen),
                               data=data)
