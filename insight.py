@@ -10,7 +10,8 @@ def keys(model, days):
             day, bin, event = key.split(':', 2)
             day = int(day)
             if day in days:
-                print 'key %s' % key
+                if key == '2:4:Share clip / Tumblr':
+                    print 'fuu %s' % list(model[key])
                 yield day, event, int(bin), len(model[key])
     return list(sorted(items()))
                 
