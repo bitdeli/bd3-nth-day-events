@@ -10,9 +10,6 @@ def keys(model, days):
             day, bin, event = key.split(':', 2)
             day = int(day)
             if day in days:
-                print 'key %s' % key
-                if key == '2:4:Share clip / Tumblr':
-                    print 'fuu %s' % list(model[key])
                 yield day, event, int(bin), len(model[key])
     return list(sorted(items()))
                 
@@ -33,7 +30,7 @@ def make_day(day_data):
 def view(model, params):
     days = [0, 1, 2]
     for day, day_data in groupby(keys(model, days), lambda x: x[0]):
-        yield Table(size=(12, 6),
+        yield Table(size=(12, 3),
                     data=make_day(day_data),
                     label='day %s' % day)
     
