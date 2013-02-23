@@ -10,6 +10,7 @@ def keys(model, days):
             day, bin, event = key.split(':', 2)
             day = int(day)
             if day in days:
+                print 'key %s' % key
                 yield day, event, int(bin), len(model[key])
     return list(sorted(items()))
                 
