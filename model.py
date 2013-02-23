@@ -31,6 +31,7 @@ def events(profile):
 @model
 def build(profiles):
     for profile in profiles:
-        for event, day, count in events(profile):
-            bin = min(int(math.log(count, 2)), MAX_BINS)
-            yield '%s:%s:%s' % (day, bin, event), profile.uid
+        if profile.uid:
+            for event, day, count in events(profile):
+                bin = min(int(math.log(count, 2)), MAX_BINS)
+                yield '%s:%s:%s' % (day, bin, event), profile.uid
