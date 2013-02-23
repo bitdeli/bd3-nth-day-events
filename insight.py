@@ -1,6 +1,12 @@
 from itertools import groupby
 from bitdeli.insight import insight
-from bitdeli.widgets import Table
+from bitdeli.widgets import Table, Widget
+
+NUM_DAYS = 30
+DEFAULT_SHOW_DAYS = 4
+
+class TokenInput(Widget):
+    pass
 
 BINS = ['1', '2-3', '4-7', '8-15', '16-31', '32-63', '64-']
 COLUMNS = [{'name': name, 'label': name.capitalize()}
@@ -28,9 +34,24 @@ def make_day(day_data):
                        key=lambda x: x['total'],
                        reverse=True))
 
+def select_days(params):
+    def label(n):
+        return 'Day %d' % n
+    if 'events' in params:
+        chosen = [int(d.split()[1]) for d in params['events']['value']]
+    else:
+        chosen = range(DEFAULT_SHOW_DAYS)
+    data = [label(i) for i in range(NUM_DAYS) if i not in chosen]
+    return chosen, TokenInput(id='tables',
+                              size=(12, 1),
+                              label='Show Days',
+                              value=map(label, chosen),
+                              data=data)
+
 @insight
 def view(model, params):
-    days = [0, 1, 2]
+    days, tokeninput = select_days(params)
+    yield tokeninput
     for day, day_data in groupby(keys(model, days), lambda x: x[0]):
         yield Table(size=(12, 'auto'),
                     data={'columns': COLUMNS,
