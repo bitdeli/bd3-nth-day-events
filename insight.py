@@ -10,10 +10,12 @@ class TokenInput(Widget):
     pass
 
 BINS = ['1', '2-3', '4-7', '8-15', '16-31', '32-63', '64-']
-COLUMNS = [{'name': 'event', 'label': 'Event'}]
-COLUMNS += [{'name': bin, 'label': bin, 'cell': 'colorstring'}
-            for bin in BINS]
-COLUMNS += [{'name': 'total', 'label': 'Total'}]
+COLUMNS = [{'name': 'event',
+            'label': 'Event',
+            'row_header': True,
+            'width': '200px'}]
+COLUMNS += [{'name': bin, 'label': bin} for bin in BINS]
+COLUMNS += [{'name': 'total', 'label': 'Total #Users'}]
           
 def keys(model, days):
     def items():
@@ -31,10 +33,10 @@ def make_day(day_data):
             for day, event, bin, num_users in items:
                 bins[bin] = num_users
             total = float(sum(bins))
-            row = dict((BINS[i], {'label': bin, 'fill': bin / total})
+            row = dict((BINS[i], {'label': bin, 'background': bin / total})
                        for i, bin in enumerate(bins))
-            row['total'] = int(total)
-            row['event'] = event
+            row['total'] = {'label': int(total)}
+            row['event'] = {'label': event}
             yield row
     return list(sorted(scored(),
                        key=lambda x: x['total'],
@@ -60,6 +62,8 @@ def view(model, params):
     yield tokeninput
     for day, day_data in groupby(keys(model, days), lambda x: x[0]):
         yield Table(size=(12, 'auto'),
+                    fixed_width=True,
+                    columns_label='Number of Events',
                     data={'columns': COLUMNS,
                           'rows': make_day(day_data)},
                     label='day %s' % day)
