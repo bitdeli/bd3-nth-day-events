@@ -15,7 +15,9 @@ COLUMNS = [{'name': 'event',
             'row_header': True,
             'width': '200px'}]
 COLUMNS += [{'name': bin, 'label': bin, 'cell': 'integer'} for bin in BINS]
-COLUMNS += [{'name': 'total', 'label': 'Total #Users'}]
+COLUMNS += [{'name': 'total',
+             'label': 'Total #Users',
+             'cell': 'integer'}]
           
 def keys(model, days):
     def items():
