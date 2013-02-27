@@ -9,7 +9,7 @@ DEFAULT_SHOW_DAYS = 4
 class TokenInput(Widget):
     pass
 
-BINS = ['1', '2-3', '4-7', '8-15', '16-31', '32-63', '64-']
+BINS = ['1', '2-3', '4-8', '8-15', '16-31', '32-63', '64-']
 COLUMNS = [{'name': 'event',
             'label': 'Event',
             'row_header': True,
