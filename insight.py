@@ -34,8 +34,9 @@ def make_day(day_data):
             bins = [0] * len(BINS)
             for day, event, bin, num_users in items:
                 bins[bin] = num_users
-            total = float(sum(bins))
-            row = dict((BINS[i], {'label': bin, 'background': bin / total})
+            total = sum(bins)
+            norm = float(max(total, 1))
+            row = dict((BINS[i], {'label': bin, 'background': bin / norm})
                        for i, bin in enumerate(bins))
             row['total'] = {'label': int(total)}
             row['event'] = {'label': event}
